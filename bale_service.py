@@ -3,6 +3,7 @@ import os
 import time
 import json
 from config import config
+from PySide6.QtWidgets import QMessageBox
 
 def get_user_data_dir():
     return os.path.join(config.APP_DATA_PATH, "bale_session")
@@ -11,6 +12,15 @@ BALE_WEB_URL = "https://web.bale.ai/contacts"
 
 class BaleService:
     def __init__(self, headless=True):
+
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Icon.Information)
+        msg_box.setText("تست اجرای سرویس")
+        msg_box.setInformativeText("فایل bale_service از پوشه خارجی با موفقیت اجرا شد!")
+        msg_box.setWindowTitle("Debugger")
+        msg_box.exec()
+
+        
         from playwright.sync_api import sync_playwright, TimeoutError
         self.playwright = sync_playwright().start()
         self.browser = self.playwright.chromium.launch_persistent_context(
